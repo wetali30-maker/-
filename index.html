@@ -1,0 +1,1374 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>СОЮЗ ПОСЕЛЕНИЙ СТАРОНОРИЛЬСКОГО ПУТИ - Официальный портал</title>
+<style>
+/* CSS: Ретро-стили 1980-90-х */
+body {
+    background-color: #7f7f7f;
+    font-family: "Times New Roman", Times, serif;
+    margin: 0;
+    padding: 10px;
+    color: #000;
+    cursor: crosshair;
+}
+
+#app-container {
+    width: 780px;
+    margin: 0 auto;
+    background-color: #fff8dc;
+    border: 4px outset #808080;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+h1 {
+    color: #c00;
+    text-decoration: underline;
+    text-align: center;
+    font-size: 22px;
+    margin: 5px 0 10px 0;
+}
+
+h2 {
+    color: #000080;
+    font-size: 18px;
+    border-bottom: 2px dashed #000080;
+    padding-bottom: 3px;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.retro-box {
+    border: 3px outset #808080;
+    padding: 6px;
+    margin-bottom: 8px;
+    background-color: #ffffff;
+}
+
+.btn {
+    font-family: "Times New Roman", serif;
+    font-weight: bold;
+    background: #c0c0c0;
+    border: 2px outset #ffffff;
+    padding: 2px 8px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.btn:active {
+    border-style: inset;
+}
+
+.blink {
+    animation: blink-animation 1s steps(2, start) infinite;
+}
+
+@keyframes blink-animation {
+    to { visibility: hidden; }
+}
+
+nav a {
+    font-weight: bold;
+    color: #0000ff;
+    text-decoration: underline;
+    margin: 0 4px;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+nav a:hover {
+    color: #ff0000;
+    background-color: #ffff00;
+}
+
+.broken-img {
+    width: 120px;
+    height: 90px;
+    background: #ddd;
+    border: 1px dashed #999;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: #555;
+    text-align: center;
+    padding: 2px;
+    box-sizing: border-box;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.modal-content {
+    background: #c0c0c0;
+    border: 4px outset #ffffff;
+    padding: 15px;
+    max-width: 650px;
+    width: 90%;
+    box-shadow: 5px 5px 0px #000;
+}
+
+.page-sec { display: none; }
+.page-sec.active { display: block; }
+
+/* Фоны страниц */
+.bg-home { background-color: #fff8dc; }
+.bg-gazeta { background-color: #f5f0dc; }
+.bg-board { background-color: #e6e6fa; }
+.bg-printer { background-color: #e8ffe8; }
+.bg-chats { background-color: #ffeffe; }
+.bg-soviet { background-color: #ffe8e8; }
+.bg-army { background-color: #f0e68c; }
+.bg-pasta { background-color: #fff0f5; }
+.bg-villages { background-color: #f0fff0; }
+.bg-games { background-color: #e8f4ff; }
+.bg-guest { background-color: #fffaed; }
+.bg-secret { background-color: #222; color: #0f0; }
+
+.chat-bubble {
+    border: 2px inset #fff;
+    padding: 6px;
+    margin: 4px 0;
+    background: #e0e0e0;
+    font-size: 13px;
+}
+.chat-bubble.me { background: #d0e0ff; text-align: right; }
+</style>
+</head>
+<body>
+
+<!-- ВХОДНАЯ МОДАЛКА ВВОДА НИКА -->
+<div id="nick-modal" class="modal-overlay" style="display:none;">
+  <div class="modal-content" style="text-align:center;">
+    <h2>ДОБРО ПОЖАЛОВАТЬ В СПСП!</h2>
+    <p>Введите ваш ник для прохождения пограничного контроля СПСП:</p>
+    <input type="text" id="nick-input" value="" placeholder="Никнейм..." style="font-family:'Times New Roman'; font-size:16px; padding:4px;">
+    <br><br>
+    <button class="btn" onclick="saveNick()">ПОДТВЕРДИТЬ И ВВОЙТИ</button>
+  </div>
+</div>
+
+<!-- ОПТИМИЗИРОВАННЫЙ СТАНДАРТНЫЙ МОДАЛ -->
+<div id="general-modal" class="modal-overlay" style="display:none;">
+  <div class="modal-content">
+    <div id="modal-body"></div>
+    <div style="text-align:right; margin-top:10px;">
+      <button class="btn" onclick="closeModal()">ЗАКРЫТЬ [X]</button>
+    </div>
+  </div>
+</div>
+
+<div id="app-container">
+  <!-- ШАПКА САЙТА -->
+  <table border="1" cellpadding="4" style="background:#c0c0c0; border:3px outset #fff;">
+    <tr>
+      <td width="100" align="center">
+        <!-- SVG ГЕРБ -->
+        <svg width="80" height="80" viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="45" fill="#c00" stroke="#000" stroke-width="3"/>
+          <polygon points="50,10 63,35 90,35 68,52 77,78 50,60 23,78 32,52 10,35 37,35" fill="#ff0"/>
+          <path d="M 30,50 Q 50,80 70,50 Q 50,70 30,50 Z" fill="#fff" stroke="#000"/>
+          <text x="50" y="90" font-size="10" text-anchor="middle" font-weight="bold" fill="#fff">СПСП</text>
+        </svg>
+      </td>
+      <td align="center">
+        <h1 style="margin:0; font-size:20px;">СОЮЗ ПОСЕЛЕНИЙ СТАРОНОРИЛЬСКОГО ПУТИ</h1>
+        <div style="font-size:12px; font-weight:bold;">Официальный портал (неофициальный)</div>
+        <div style="font-size:11px;">ПГТ Старонорильск | Население: 5 000 | Стабильность: 0</div>
+        <div style="margin-top:4px;">
+            <button class="btn" onclick="toggleAudio()" id="sound-btn">[ЗВУК: ВЫКЛ]</button>
+            <span id="user-greeting" style="font-weight:bold; color:#000080; font-size:12px;"></span>
+        </div>
+      </td>
+      <td width="110" align="center">
+        <!-- SVG UNDER CONSTRUCTION -->
+        <svg width="90" height="70" viewBox="0 0 100 80">
+          <rect x="5" y="5" width="90" height="70" fill="#ff0" stroke="#000" stroke-width="3"/>
+          <line x1="5" y1="5" x2="95" y2="75" stroke="#000" stroke-width="8"/>
+          <text x="50" y="30" font-size="9" text-anchor="middle" font-weight="bold" fill="#000">UNDER</text>
+          <text x="50" y="45" font-size="9" text-anchor="middle" font-weight="bold" fill="#c00">CONSTRUCTION</text>
+          <text x="50" y="60" font-size="8" text-anchor="middle" fill="#000">СТРОЙКА ВЕКА</text>
+        </svg>
+      </td>
+    </tr>
+  </table>
+
+  <!-- БЕГУЩАЯ СТРОКА -->
+  <div style="background:#000; color:#0f0; border:2px inset #808080; margin:4px 0; padding:2px;">
+    <marquee id="main-marquee" scrollamount="4">
+      Внимание! Импортные пошлины на оружие отменены! Макаронная фабрика — стройка века! Антошка, верни долг!
+    </marquee>
+  </div>
+
+  <!-- НАВИГАЦИОННОЕ МЕНЮ -->
+  <div style="background:#d4d0c8; border:2px outset #fff; padding:4px; text-align:center;" class="retro-box">
+    <nav>
+      <a href="#/">[Главная]</a>
+      <a href="#/gazeta">[Газеты]</a>
+      <a href="#/board">[Доска]</a>
+      <a href="#/printer">[Печатный станок]</a>
+      <a href="#/chats">[Сообщения]</a>
+      <a href="#/soviet">[Совет]</a>
+      <a href="#/army">[Армия]</a>
+      <a href="#/pasta">[Макароны]</a>
+      <a href="#/villages">[Деревни]</a>
+      <a href="#/games">[Игры]</a>
+      <a href="#/guest">[Гостевая]</a>
+      <a href="#/secret" id="secret-link" style="display:none; color:red;" class="blink">[СЕКРЕТНО]</a>
+    </nav>
+  </div>
+
+  <!-- СОДЕРЖИМОЕ СТРАНИЦ -->
+  <div id="page-content" class="retro-box" style="min-height:380px;">
+
+    <!-- 1. ГЛАВНАЯ -->
+    <div id="sec-home" class="page-sec active bg-home">
+      <h1>ГЛАВНЫЙ ПОРТАЛ СТАРОНОРИЛЬСКА</h1>
+      <table border="0" width="100%">
+        <tr>
+          <td width="65%" valign="top">
+            <div class="retro-box">
+              <p id="welcome-text">Здравствуй, гражданин. Ты на официальном сайте Союза Поселений. У нас нет президента, но есть Олигархический совет. У нас нет валюты, но есть пошлины. У нас нет промышленности, но есть макароны. Располагайся.</p>
+              <button class="btn" onclick="playHymn()">▶ Включить Гимн СПСП (караоке)</button>
+            </div>
+            
+            <div class="retro-box" style="background:#fff;">
+              <h2>Что нового в Совете и мире:</h2>
+              <ul style="font-size:13px; padding-left:20px;">
+                <li><b>1980 г.:</b> Отмена импортных пошлин на оружие.</li>
+                <li><b>1980 г.:</b> Указ о начале проектирования Макаронной фабрики.</li>
+                <li><b>1980 г.:</b> Раскол в Олигархическом совете (Народники против Государственников).</li>
+                <li><b>1980 г.:</b> Получено загадочное письмо из Дрейландии.</li>
+                <li><b>1980 г.:</b> До нас дошли сведения о каких-то инопланетянах.</li>
+              </ul>
+            </div>
+          </td>
+          <td width="35%" valign="top">
+            <!-- ПОГОДА И КУРС -->
+            <div class="retro-box" style="background:#e8e8e8;">
+              <h2>Погода:</h2>
+              <div id="weather-val" style="font-weight:bold; color:#c00;">Мутно. Ветер. Пошлины.</div>
+              <button class="btn" onclick="updateWeather()" style="margin-top:4px; font-size:11px;">Обновить</button>
+            </div>
+
+            <div class="retro-box" style="background:#e8e8e8;">
+              <h2>Курс валют:</h2>
+              <div style="font-size:12px;">
+                1 ящ. пива = 3 мешка картошки<br>
+                1 евромарка (€М) = 0.0001 ящ. пива<br>
+                Бартер — приветствуется!
+              </div>
+            </div>
+
+            <div class="retro-box" style="background:#ffe8e8; text-align:center;">
+              <h2>Срок жизни страны:</h2>
+              <div id="country-timer" class="blink" style="font-size:20px; font-weight:bold; color:#c00;">999999</div>
+              <div style="font-size:10px;">секунд до распада</div>
+            </div>
+          </td>
+        </tr>
+      </table>
+
+      <!-- КОРУСЕЛЬ РЕКЛАМЫ -->
+      <div class="retro-box" style="background:#ffffcc; text-align:center;">
+        <span style="font-size:10px; color:#666;">-- РЕКЛАМНЫЙ БЛОК --</span><br>
+        <div id="ad-banner" style="font-weight:bold; font-size:16px; color:#008000; min-height:24px;"></div>
+      </div>
+
+      <div style="text-align:center; margin-top:10px;">
+        <button class="btn" style="font-size:16px; background:#ffcc00;" onclick="location.hash='#/soviet'">★ СТАТЬ ОЛИГАРХОМ ПРЯМО СЕЙЧАС ★</button>
+      </div>
+    </div>
+
+    <!-- 2. ГАЗЕТЫ -->
+    <div id="sec-gazeta" class="page-sec bg-gazeta">
+      <h1>ПРЕССА СТАРОНОРИЛЬСКОГО ПУТИ</h1>
+      <div style="text-align:center; margin-bottom:10px;">
+        <button class="btn" onclick="switchGazetaTab('sn-tab')">Старонорильский Вестник</button>
+        <button class="btn" onclick="switchGazetaTab('oms-tab')">ОМСкей Вестник</button>
+        <button class="btn" onclick="switchGazetaTab('create-tab')">✍ Написать свою статью</button>
+      </div>
+
+      <!-- Вкладка Старонорильский Вестник -->
+      <div id="sn-tab" class="gazeta-tab retro-box" style="background:#fff;">
+        <h2>«Старонорильский Вестник» (Официальный орга́н)</h2>
+        <div style="font-size:13px; line-height:1.4;">
+          <h3>Импортные пошлины на оружие отменены!</h3>
+          <p>Олигархический совет официально расширяет возможности населения к самовооружению. Теперь ввоз любого стрелкового и легкого артиллерийского оружия через КПП не облагается бартерной пошлиной.</p>
+          <hr>
+          <h3>570 000 евромарок выделено на макаронную фабрику!</h3>
+          <p>Создан Специальный Комитет по Строительству. Выделенные средства уже поступили на баланс Совета. Начало закладки фундамента планируется в ближайшем пятилетии.</p>
+          <hr>
+          <h3>Герой Союза за макароны</h3>
+          <p>Совет обещает 1% прибыли всем участникам строительного комитета. Примечание: В случае недостройки фабрики, участники комитета достроят её за свой личный счёт.</p>
+        </div>
+      </div>
+
+      <!-- Вкладка ОМСкей Вестник -->
+      <div id="oms-tab" class="gazeta-tab retro-box" style="background:#fff; display:none;">
+        <h2>«ОМСкей Вестник» (Народная правда, от руки)</h2>
+        <div style="font-size:13px; line-height:1.4;">
+          <p><i>«Застой, хочется движухи, хочется тусить в каких-то международных тусах¹. — Неизвестный член совета.»</i><br><small>¹Или трусах, хрен его знает.</small></p>
+          <hr>
+          <h2 style="color:red; font-size:22px; text-align:center;">P.S. Антошка гандошка верни долг а ни то я приду и подожгу и твой дом.</h2>
+          <hr>
+          <p>«До нас дошли сведения о каких-то инопланетянах. Я бы вдул.» — примечание редактора.</p>
+        </div>
+      </div>
+
+      <!-- Вкладка Создания -->
+      <div id="create-tab" class="gazeta-tab retro-box" style="background:#fff; display:none;">
+        <h2>Генератор газетной вырезки</h2>
+        <table border="0">
+          <tr>
+            <td>Газета:</td>
+            <td>
+              <select id="gaz-gen-type" style="font-family:'Times New Roman';">
+                <option>ОМСкей Вестник</option>
+                <option>Старонорильский Вестник</option>
+              </select>
+            </td>
+          </tr>
+          <tr><td>Заголовок:</td><td><input type="text" id="gaz-gen-title" value="Срочная новость!" style="width:100%;"></td></tr>
+          <tr><td>Текст:</td><td><textarea id="gaz-gen-text" rows="3" style="width:100%;">Олигархический совет снова отменил пошлины.</textarea></td></tr>
+        </table>
+        <button class="btn" onclick="generateNewspaperCanvas()" style="margin-top:6px;">Сгенерировать вырезку</button>
+        <br><br>
+        <canvas id="newspaper-canvas" width="500" height="280" style="border:1px solid #000; display:none; max-width:100%;"></canvas>
+        <br>
+        <button id="gaz-download-btn" class="btn" style="display:none;" onclick="downloadCanvas('newspaper-canvas', 'gazeta_spsp.png')">Скачать PNG</button>
+      </div>
+
+      <div id="custom-articles-holder"></div>
+    </div>
+
+    <!-- 3. ДОСКА ОБЪЯВЛЕНИЙ -->
+    <div id="sec-board" class="page-sec bg-board">
+      <h1>ДОСКА ОБЪЯВЛЕНИЙ И ВАКАНСИЙ</h1>
+      <p style="font-size:12px; text-align:center;">Нажмите на любое объявление, чтобы получить соответствующее государственное удостоверение!</p>
+      <div id="board-grid" style="display:flex; flex-wrap:wrap; gap:8px; justify-content:center;"></div>
+    </div>
+
+    <!-- 4. ПЕЧАТНЫЙ СТАНОК -->
+    <div id="sec-printer" class="page-sec bg-printer">
+      <h1>ГОСУДАРСТВЕННЫЙ ПЕЧАТНЫЙ СТАНОК</h1>
+      <div style="text-align:center;" class="retro-box">
+        <div style="font-size:18px;">Центральный Банк СПСП</div>
+        <div style="font-size:14px; margin:6px 0;">
+          Напечатано: <b><span id="printed-money">0</span> €М</b> | Инфляция: <b><span id="inflation-rate">0.00</span>%</b>
+        </div>
+        <div id="inflation-status" style="font-weight:bold; color:#c00; margin-bottom:10px;">Всё стабильно. Пока.</div>
+        
+        <button class="btn" onclick="printMoney(1)" style="font-size:18px; padding:10px 20px; background:#90ee90;">НАПЕЧАТАТЬ ДЕНЬГИ (+1 000 €М)</button>
+        <br><br>
+        <button class="btn" onclick="printMoney(10)">НАПЕЧАТАТЬ x10</button>
+        <button class="btn" onclick="printMoney(100)">НАПЕЧАТАТЬ ВСЁ (x100)</button>
+        <button class="btn" onclick="burnMoney()" style="background:#ff9999;">Сжечь деньги (−50к €М)</button>
+        
+        <hr>
+        <div style="font-size:13px;">
+          Заначка пива: <b><span id="beer-count">0</span> ящиков</b><br>
+          <button class="btn" onclick="buyBeer()" style="margin-top:4px;">Купить ящик пива (Курс: <span id="beer-cost">100</span> €М)</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. СООБЩЕНИЯ (ЧАТЫ) -->
+    <div id="sec-chats" class="page-sec bg-chats">
+      <h1>ЛИЧНЫЕ СООБЩЕНИЯ (СВЯЗНОЙ КПП)</h1>
+      <div style="font-size:11px; text-align:center; margin-bottom:6px;">Уровень подозрения Интерпола: <b><span id="suspicion-level">0</span>/100</b></div>
+      
+      <table border="1" cellpadding="4" style="background:#fff;">
+        <tr>
+          <td width="30%" valign="top">
+            <b>Контакты:</b><br>
+            <button class="btn" style="width:100%; text-align:left; margin-top:2px;" onclick="openChat(1)">Мама (Заложник)</button>
+            <button class="btn" style="width:100%; text-align:left; margin-top:2px;" onclick="openChat(2)">Журналист (Арвоника)</button>
+            <button class="btn" style="width:100%; text-align:left; margin-top:2px;" onclick="openChat(3)">Интерпол</button>
+          </td>
+          <td width="70%" valign="top">
+            <div id="chat-window" style="min-height:220px; max-height:250px; overflow-y:auto; border:1px solid #000; padding:4px; background:#fafafa;"></div>
+            <div id="chat-options" style="margin-top:6px;"></div>
+          </td>
+        </tr>
+      </table>
+      
+      <div class="retro-box" style="margin-top:8px; background:#f0f0f0; font-size:11px;">
+        <b>Журнал операций связи:</b>
+        <div id="chat-log" style="height:50px; overflow-y:auto; font-family:Courier New, monospace;"></div>
+      </div>
+    </div>
+
+    <!-- 6. ОЛИГАРХИЧЕСКИЙ СОВЕТ -->
+    <div id="sec-soviet" class="page-sec bg-soviet">
+      <h1>ОЛИГАРХИЧЕСКИЙ СОВЕТ СПСП</h1>
+      <table border="0" width="100%">
+        <tr>
+          <td width="50%" valign="top">
+            <div class="retro-box">
+              <h2>Состав Совета (21 место):</h2>
+              <ul style="font-size:12px; padding-left:15px;">
+                <li><b>Государственники-ястребы:</b> 6 мест</li>
+                <li><b>Консерваторы-пассив:</b> 3 места</li>
+                <li><b>Народники-романтики:</b> 6 мест</li>
+                <li style="color:#c00;"><b>Уточняется (вакантно):</b> 6 мест</li>
+              </ul>
+            </div>
+          </td>
+          <td width="50%" valign="top">
+            <div class="retro-box">
+              <h2>Подать заявку в Совет:</h2>
+              <div style="font-size:11px;">
+                Ваш ник: <input type="text" id="soviet-nick" readonly style="width:120px;"><br>
+                Причина: <input type="text" id="soviet-reason" value="Хочу пива" style="width:120px;"><br>
+                <label><input type="checkbox" checked> Согласен на всё</label><br>
+                <button class="btn" onclick="applyToSoviet()" style="margin-top:4px;">Отправить заявку</button>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </table>
+
+      <div class="retro-box" style="background:#fff;">
+        <h2>Голосования Совета:</h2>
+        <div id="voting-list" style="font-size:12px;"></div>
+      </div>
+    </div>
+
+    <!-- 7. АРМИЯ И ПОШЛИНЫ -->
+    <div id="sec-army" class="page-sec bg-army">
+      <h1>АРМИЯ И КАЛЬКУЛЯТОР ПОШЛИН</h1>
+      <table border="0" width="100%">
+        <tr>
+          <td width="50%" valign="top">
+            <div class="retro-box">
+              <h2>Вооружённые силы:</h2>
+              <div style="font-size:13px;">
+                Личный состав: <b><span id="army-count">500</span> чел.</b><br>
+                Бюджет армии: <b>0 €М</b><br>
+                Собрано пошлин: <b><span id="tax-collected">42800</span> €М</b>
+              </div>
+              <br>
+              <button class="btn" onclick="hireSoldier()">Нанять +1 бойца</button>
+            </div>
+          </td>
+          <td width="50%" valign="top">
+            <div class="retro-box">
+              <h2>Калькулятор пошлин:</h2>
+              <div style="font-size:12px;">
+                Тип груза:<br>
+                <select id="calc-cargo" style="width:100%; font-family:Times New Roman;">
+                  <option>Пиво</option>
+                  <option>Макароны</option>
+                  <option>Оружие</option>
+                  <option>Дипломы</option>
+                  <option>Неизвестно (не говорите)</option>
+                </select><br>
+                Маршрут:<br>
+                <select id="calc-route" style="width:100%; font-family:Times New Roman;">
+                  <option>Литва -> Украина</option>
+                  <option>Украина -> Литва</option>
+                  <option>Через Старонорильск</option>
+                </select><br><br>
+                <button class="btn" onclick="calculateTax()">Рассчитать пошлину</button>
+                <div id="tax-result" style="margin-top:6px; font-weight:bold; color:#c00;"></div>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- 8. МАКАРОННАЯ ФАБРИКА -->
+    <div id="sec-pasta" class="page-sec bg-pasta">
+      <h1>МАКАРОННАЯ ФАБРИКА (СТРОЙКА ВЕКА)</h1>
+      <div class="retro-box" style="text-align:center; background:#fff;">
+        <h2>Прогресс строительства:</h2>
+        <div style="border:2px solid #000; background:#eee; height:24px; position:relative; margin:10px 0;">
+          <div id="pasta-progress" style="background:#008000; width:0%; height:100%;"></div>
+          <div style="position:absolute; top:3px; left:0; right:0; font-weight:bold; font-size:12px;" id="pasta-pct-text">0.0000%</div>
+        </div>
+        <div style="font-size:12px; margin-bottom:10px;">
+          Выделено: <b>570 000 €М</b> | Потрачено: <b>0 €М</b> | Освоено: <b>0%</b>
+        </div>
+        
+        <button class="btn" onclick="investPasta()">Вложить 570 000 €М</button>
+        <button class="btn" onclick="becomePastaHero()">Стать Героем Союза</button>
+        
+        <hr>
+        <div style="font-size:11px; text-align:left;">
+          <b>Комитет по строительству:</b> Иван ████, Петр ████, <span id="pasta-hero-name">Имярек</span>.<br>
+          <i>«Не достроят — достроят за свой счёт.»</i>
+        </div>
+      </div>
+    </div>
+
+    <!-- 9. ДЕРЕВНИ (КАРТА) -->
+    <div id="sec-villages" class="page-sec bg-villages">
+      <h1>КАРТА АВТОНОМНЫХ ДЕРЕВЕНЬ</h1>
+      <p style="font-size:11px; text-align:center;">Кликните на объект для просмотра местных законов и статуса.</p>
+      
+      <!-- SVG КАРТА ДЕРЕВЕНЬ -->
+      <div style="text-align:center;">
+        <svg width="600" height="240" style="border:2px solid #000; background:#e0f0e0;" id="villages-map">
+          <!-- Деревни как кружки/пятна -->
+          <g onclick="showVillage('Старонорильск', 5000, 'Въезд только с пошлиной')" style="cursor:pointer;">
+            <circle cx="100" cy="80" r="25" fill="#ff9999" stroke="#000"/>
+            <text x="100" y="85" font-size="10" text-anchor="middle">ПГТ Старонорильск</text>
+          </g>
+          <g onclick="showVillage('ОМС', 1200, 'Пиво — единственная валюта')" style="cursor:pointer;">
+            <circle cx="240" cy="50" r="20" fill="#99ff99" stroke="#000"/>
+            <text x="240" y="54" font-size="9" text-anchor="middle">ОМС</text>
+          </g>
+          <g onclick="showVillage('Хацапетовка', 450, 'По средам не здороваться')" style="cursor:pointer;">
+            <circle cx="380" cy="90" r="18" fill="#9999ff" stroke="#000"/>
+            <text x="380" y="94" font-size="9" text-anchor="middle">Хацапетовка</text>
+          </g>
+          <g onclick="showVillage('Нижние Макароны', 300, 'Макароны — священны')" style="cursor:pointer;">
+            <circle cx="180" cy="160" r="18" fill="#ffff99" stroke="#000"/>
+            <text x="180" y="164" font-size="9" text-anchor="middle">Н. Макароны</text>
+          </g>
+          <g onclick="showVillage('Верхние Макароны', 280, 'Запрещено варить макароны после 18:00')" style="cursor:pointer;">
+            <circle cx="290" cy="180" r="16" fill="#ff99ff" stroke="#000"/>
+            <text x="290" y="184" font-size="8" text-anchor="middle">В. Макароны</text>
+          </g>
+          <g onclick="showVillage('ПГТ Пивпром', 850, 'Все равны, но пивовары ровнее')" style="cursor:pointer;">
+            <circle cx="480" cy="150" r="22" fill="#ffcc99" stroke="#000"/>
+            <text x="480" y="154" font-size="9" text-anchor="middle">ПГТ Пивпром</text>
+          </g>
+          <g onclick="showVillage('пос. Фисташки', 60, 'Кто нашел фисташку — тот глава')" style="cursor:pointer;">
+            <circle cx="520" cy="60" r="15" fill="#ccffcc" stroke="#000"/>
+            <text x="520" y="64" font-size="8" text-anchor="middle">Фисташки</text>
+          </g>
+        </svg>
+      </div>
+
+      <div id="village-info" class="retro-box" style="margin-top:8px; display:none;">
+        <h2 id="v-name">Название</h2>
+        <div>Население: <span id="v-pop"></span> чел.</div>
+        <div>Местный закон: <b><span id="v-law"></span></b></div>
+        <div>Автономия: <b>Серьёзная</b> | Стабильность: <b>0</b></div>
+      </div>
+      
+      <div style="font-size:11px; font-style:italic; text-align:center; margin-top:4px;">
+        «Всего деревень: 12+. Перечислить не смогу.» — из отчёта инспектора.
+      </div>
+    </div>
+
+    <!-- 10. ИГРЫ -->
+    <div id="sec-games" class="page-sec bg-games">
+      <h1>НАРОДНЫЕ ИГРЫ СТАРОНОРИЛЬСКА</h1>
+      <div style="text-align:center; margin-bottom:8px;">
+        <button class="btn" onclick="switchGame('g-mafia')">Убеги от мафии</button>
+        <button class="btn" onclick="switchGame('g-pistachio')">Найди фисташки</button>
+        <button class="btn" onclick="switchGame('g-dice')">Брось d20 (Долг)</button>
+      </div>
+
+      <!-- Игра: Мафия -->
+      <div id="g-mafia" class="game-box retro-box" style="text-align:center;">
+        <h2>Мини-игра: Убеги от мафии</h2>
+        <canvas id="mafia-canvas" width="400" height="200" style="background:#000; border:2px solid #fff;"></canvas>
+        <br>
+        <button class="btn" onclick="startMafiaGame()">СТАРТ</button>
+        <div style="font-size:11px; margin-top:4px;">Управление: Движение мышью влево/вправо по полю.</div>
+      </div>
+
+      <!-- Игра: Фисташки -->
+      <div id="g-pistachio" class="game-box retro-box" style="text-align:center; display:none;">
+        <h2>Мини-игра: Найди фисташки</h2>
+        <p style="font-size:11px;">Фисташка спрятана в одной из 25 ячеек. 10 попыток!</p>
+        <div id="pistachio-grid" style="display:grid; grid-template-columns:repeat(5, 40px); gap:4px; justify-content:center; margin:10px 0;"></div>
+        <button class="btn" onclick="initPistachioGame()">Сбросить поле</button>
+      </div>
+
+      <!-- Игра: d20 -->
+      <div id="g-dice" class="game-box retro-box" style="text-align:center; display:none;">
+        <h2>Мини-игра: Кость Судьбы d20</h2>
+        <p style="font-size:12px;">Узнай, сколько ящиков пива ты должен Антошке:</p>
+        <div id="dice-result" style="font-size:36px; font-weight:bold; color:#c00; margin:10px 0;">?</div>
+        <button class="btn" onclick="rollDice()">БРОСИТЬ D20</button>
+      </div>
+    </div>
+
+    <!-- 11. ГОСТЕВАЯ КНИГА -->
+    <div id="sec-guest" class="page-sec bg-guest">
+      <h1>ГОСТЕВАЯ КНИГА СПСП</h1>
+      <div class="retro-box">
+        <h2>Оставить сообщение:</h2>
+        <textarea id="guest-msg-input" rows="2" style="width:100%; font-family:Times New Roman;" placeholder="Пиво привез?"></textarea>
+        <button class="btn" onclick="addGuestPost()" style="margin-top:4px;">Отправить в Архив</button>
+      </div>
+
+      <div id="guest-posts-container"></div>
+    </div>
+
+    <!-- 12. СЕКРЕТНО -->
+    <div id="sec-secret" class="page-sec bg-secret">
+      <h1 style="color:#f00;">[СЕКРЕТНЫЙ АРХИВ ОЛИГАРХИЧЕСКОГО СОВЕТА]</h1>
+      <div style="border:2px dashed #f00; padding:10px; font-family:Courier New, monospace;">
+        <p class="blink" style="color:#ff0;">ВНИМАНИЕ! ДОКУМЕНТ СВЕРХСЕКРЕТЕН!</p>
+        <p>Депеша №00-МОС: Всё, что вы слышали про МОС — правда. Всё, что вы слышали про инопланетян — правда. Макаронной фабрики не существует. Пиво тоже. Остался только ты, <span class="secret-nick-span" style="color:#fff; font-weight:bold;"></span>.</p>
+        <hr style="border-color:#f00;">
+        <button class="btn" onclick="checkReality()">Проверить реальность</button>
+        <button class="btn" onclick="reportInterpol()">Пожаловаться в Интерпол</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ФУТЕР САЙТА -->
+  <table border="1" cellpadding="4" style="background:#c0c0c0; border:3px outset #fff; margin-top:8px;" width="100%">
+    <tr>
+      <td align="center" style="font-size:11px;">
+        Счётчик посещений: <b>[<span id="visit-counter">004281</span>]</b><br>
+        Сайт лучше смотреть в <b>Netscape Navigator 3.0</b> при разрешении 800×600.<br>
+        Все права <u>НЕ</u> защищены. Копирование приветствуется.<br>
+        <i>Сайт работает на честном слове и одном ящике пива.</i>
+      </td>
+      <td width="130" align="center">
+        <!-- БИТАЯ КАРТИНКА -->
+        <div class="broken-img">
+          <img src="x.gif" alt="[ФОТО НЕ ЗАГРУЗИЛОСЬ]" onerror="this.style.display='none'">
+          <span>[ФОТО НЕ ЗАГРУЗИЛОСЬ]</span>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<script>
+// ==========================================
+// ИНИЦИАЛИЗАЦИЯ И ХРАНИЛИЩЕ (localStorage)
+// ==========================================
+let state = {
+    nick: localStorage.getItem('sn_nick') || '',
+    money: parseInt(localStorage.getItem('sn_money')) || 0,
+    inflation: parseFloat(localStorage.getItem('sn_inflation')) || 0.0,
+    beer: parseInt(localStorage.getItem('sn_beer')) || 0,
+    suspicion: parseInt(localStorage.getItem('sn_suspicion')) || 0,
+    visited: JSON.parse(localStorage.getItem('sn_visited') || '[]'),
+    certs: JSON.parse(localStorage.getItem('sn_certs') || '[]'),
+    audio: false
+};
+
+// ==========================================
+// WEBAUDIO API
+// ==========================================
+let audioCtx = null;
+
+function initAudio() {
+    if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+}
+
+function toggleAudio() {
+    initAudio();
+    state.audio = !state.audio;
+    document.getElementById('sound-btn').innerText = state.audio ? '[ЗВУК: ВКЛ]' : '[ЗВУК: ВЫКЛ]';
+    if(state.audio) playBeep(440, 0.1);
+}
+
+function playBeep(freq = 440, type = 'sine', duration = 0.1) {
+    if (!state.audio || !audioCtx) return;
+    try {
+        let osc = audioCtx.createOscillator();
+        let gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.value = freq;
+        gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+    } catch(e){}
+}
+
+function playCoinSound() {
+    // // КЛИКЕР: звук монетки
+    playBeep(880, 'square', 0.05);
+    setTimeout(() => playBeep(1200, 'square', 0.1), 50);
+}
+
+function playHymn() {
+    // // ЗВУК: Гимн СПСП
+    initAudio();
+    if(!state.audio) toggleAudio();
+    let notes = [261, 293, 329, 349, 392, 440, 493, 523];
+    notes.forEach((freq, i) => {
+        setTimeout(() => playBeep(freq, 'triangle', 0.2), i * 250);
+    });
+    alert("Гимн СПСП исполняется: 'Эй, макароны, пошлина, пивасик, у нас нет денег, но есть наш станок!'");
+}
+
+// ==========================================
+// ЛОГИКА НИКА И МОДАЛОК
+// ==========================================
+function checkNick() {
+    if (!state.nick) {
+        let randNum = Math.floor(Math.random() * 8999) + 1000;
+        document.getElementById('nick-input').value = 'Бомж_№' + randNum;
+        document.getElementById('nick-modal').style.display = 'flex';
+    } else {
+        applyNick();
+    }
+}
+
+function saveNick() {
+    let val = document.getElementById('nick-input').value.trim();
+    if (!val) val = 'Бомж_№' + (Math.floor(Math.random() * 8999) + 1000);
+    state.nick = val;
+    localStorage.setItem('sn_nick', state.nick);
+    document.getElementById('nick-modal').style.display = 'none';
+    applyNick();
+}
+
+function applyNick() {
+    document.getElementById('user-greeting').innerText = 'Привет, ' + state.nick;
+    document.getElementById('welcome-text').innerText = `Здравствуй, ${state.nick}. Ты на официальном сайте Союза Поселений. У нас нет президента, но есть Олигархический совет. У нас нет валюты, но есть пошлины. У нас нет промышленности, но есть макароны. Располагайся.`;
+    document.getElementById('soviet-nick').value = state.nick;
+    document.querySelectorAll('.secret-nick-span').forEach(el => el.innerText = state.nick);
+}
+
+function openModal(htmlContent) {
+    document.getElementById('modal-body').innerHTML = htmlContent;
+    document.getElementById('general-modal').style.display = 'flex';
+}
+
+function closeModal() {
+    document.getElementById('general-modal').style.display = 'none';
+}
+
+// ==========================================
+// HASH РОУТИНГ
+// ==========================================
+function handleRoute() {
+    let hash = location.hash || '#/';
+    let route = hash.replace('#/', '');
+    if (!route) route = 'home';
+    
+    // Пасхалка / Отслеживание посещенных страниц
+    if (!state.visited.includes(route)) {
+        state.visited.push(route);
+        localStorage.setItem('sn_visited', JSON.stringify(state.visited));
+    }
+    
+    if (state.visited.length >= 10 || state.suspicion >= 100) {
+        document.getElementById('secret-link').style.display = 'inline';
+    }
+
+    document.querySelectorAll('.page-sec').forEach(el => el.classList.remove('active'));
+    
+    let target = document.getElementById('sec-' + route);
+    if (target) {
+        target.classList.add('active');
+    } else {
+        document.getElementById('sec-home').classList.add('active');
+    }
+}
+
+window.addEventListener('hashchange', handleRoute);
+
+// ==========================================
+// ГЛАВНАЯ СТРАНИЦА
+// ==========================================
+function updateWeather() {
+    playBeep(300, 'sine', 0.05);
+    let weathers = [
+        "Мутно. Ветер. Пошлины.",
+        "Дождь из Евромарок. Ветер 5 м/с.",
+        "Пасмурно. Ожидаются макаронные осадки.",
+        "Погода не оплатила пошлину."
+    ];
+    let rand = weathers[Math.floor(Math.random() * weathers.length)];
+    document.getElementById('weather-val').innerText = rand;
+}
+
+let ads = [
+    "Открой казино без лицензии! Дорого!",
+    "Европейский диплом за 2 ящика пива!",
+    "Пиво оптом из Старонорильска! Звони в колокол!",
+    "Купи макароны — поддержи Совет!"
+];
+let adIdx = 0;
+setInterval(() => {
+    adIdx = (adIdx + 1) % ads.length;
+    let el = document.getElementById('ad-banner');
+    if (el) el.innerText = ads[adIdx];
+}, 4000);
+
+// Счетчик распада страны
+setInterval(() => {
+    let el = document.getElementById('country-timer');
+    if (el) {
+        let val = parseInt(el.innerText) - 1;
+        if (val <= 0) val = "Не сегодня";
+        el.innerText = val;
+    }
+}, 1000);
+
+// Счетчик посещений
+function updateVisitCounter() {
+    let c = parseInt(localStorage.getItem('sn_visits') || '4281') + 1;
+    localStorage.setItem('sn_visits', c);
+    let el = document.getElementById('visit-counter');
+    if (c % 7 === 0) el.innerText = "-00001";
+    else if (c % 13 === 0) el.innerText = "ERROR";
+    else el.innerText = String(c).padStart(6, '0');
+}
+
+// ==========================================
+// ГАЗЕТЫ
+// ==========================================
+function switchGazetaTab(tabId) {
+    document.querySelectorAll('.gazeta-tab').forEach(el => el.style.display = 'none');
+    document.getElementById(tabId).style.display = 'block';
+}
+
+function generateNewspaperCanvas() {
+    let title = document.getElementById('gaz-gen-title').value;
+    let text = document.getElementById('gaz-gen-text').value;
+    let type = document.getElementById('gaz-gen-type').value;
+
+    let canvas = document.getElementById('newspaper-canvas');
+    canvas.style.display = 'block';
+    document.getElementById('gaz-download-btn').style.display = 'inline-block';
+    let ctx = canvas.getContext('2d');
+
+    // Бумажный фон
+    ctx.fillStyle = '#f5f0dc';
+    ctx.fillRect(0, 0, 500, 280);
+    ctx.strokeStyle = '#000';
+    ctx.lineWidth = 4;
+    ctx.strokeRect(5, 5, 490, 270);
+
+    // Шапка
+    ctx.fillStyle = '#000';
+    ctx.font = 'bold 22px Times New Roman';
+    ctx.fillText(type.toUpperCase(), 20, 35);
+    ctx.font = '12px Courier New';
+    ctx.fillText('ВЫПУСК ОТ 1980 ГОДА | ЦЕНА: 1 ЯЩИК ПИВА', 20, 55);
+    ctx.beginPath(); ctx.moveTo(20, 65); ctx.lineTo(480, 65); ctx.stroke();
+
+    // Заголовок и текст
+    ctx.font = 'bold 16px Times New Roman';
+    ctx.fillText(title, 20, 90);
+
+    ctx.font = '14px Times New Roman';
+    ctx.fillText(text.substring(0, 50), 20, 120);
+    if(text.length > 50) ctx.fillText(text.substring(50, 100), 20, 140);
+
+    // Приписка про долг
+    ctx.fillStyle = '#c00';
+    ctx.font = 'bold 12px Courier New';
+    ctx.fillText(`P.S. ${state.nick}, не забудь вернуть долг Антошке!`, 20, 230);
+
+    // Штамп
+    ctx.strokeStyle = '#c00';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(330, 170, 140, 50);
+    ctx.font = 'bold 12px Times New Roman';
+    ctx.fillText('ОДОБРЕНО СОВЕТОМ', 340, 200);
+}
+
+// ==========================================
+// ПЕЧАТНЫЙ СТАНОК (КЛИКЕР)
+// ==========================================
+function updatePrinterUI() {
+    document.getElementById('printed-money').innerText = state.money.toLocaleString();
+    document.getElementById('inflation-rate').innerText = state.inflation.toFixed(2);
+    document.getElementById('beer-count').innerText = state.beer;
+    document.getElementById('beer-cost').innerText = Math.floor(100 + state.inflation * 10);
+
+    let status = "Всё стабильно. Пока.";
+    if (state.inflation > 10) status = "Хлеб подорожал. Пиво — нет.";
+    if (state.inflation > 50) status = "Бартер стал выгоднее.";
+    if (state.inflation > 100) status = "Олигархический совет выражает озабоченность.";
+    if (state.inflation > 500) status = "Деньги больше никому не нужны. Вы победили.";
+    if (state.inflation > 1000) status = "Вы обрушили экономику! Нажмите 'Сжечь деньги'.";
+    document.getElementById('inflation-status').innerText = status;
+
+    localStorage.setItem('sn_money', state.money);
+    localStorage.setItem('sn_inflation', state.inflation);
+    localStorage.setItem('sn_beer', state.beer);
+}
+
+function printMoney(multiplier = 1) {
+    // // КЛИКЕР:
+    state.money += 1000 * multiplier;
+    state.inflation += 0.01 * multiplier;
+    playCoinSound();
+    updatePrinterUI();
+}
+
+function burnMoney() {
+    if (state.money >= 50000) {
+        state.money -= 50000;
+        state.inflation = Math.max(0, state.inflation - 10);
+        playBeep(200, 'sawtooth', 0.3);
+        updatePrinterUI();
+    } else {
+        alert("Нечего сжигать, напечатайте больше!");
+    }
+}
+
+function buyBeer() {
+    let cost = Math.floor(100 + state.inflation * 10);
+    if (state.money >= cost) {
+        state.money -= cost;
+        state.beer += 1;
+        playCoinSound();
+        updatePrinterUI();
+    } else {
+        alert("Не хватает евромарок! Напечатайте еще.");
+    }
+}
+
+// ==========================================
+// ДОСКА ОБЪЯВЛЕНИЙ & УДОСТОВЕРЕНИЯ
+// ==========================================
+const boardItems = [
+    { title: "Стань разбойником!", cert: "Удостоверение Разбойника III разряда", bg: "#ffffcc" },
+    { title: "Открой казино!", cert: "Лицензия на казино 'Три топора'", bg: "#ccffff" },
+    { title: "Стань мошенником!", cert: "Диплом профессионального мошенника", bg: "#ffccff" },
+    { title: "Европейский диплом!", cert: "Фейковый диплом Оксфорда 1979г.", bg: "#ccffcc" },
+    { title: "Оружие без пошлин!", cert: "Разрешение на ношение чего угодно", bg: "#ffcccc" },
+    { title: "Пиво оптом!", cert: "Член клуба любителей пива 'Старонорильск'", bg: "#e6e6fa" },
+    { title: "Макароны — вкладывайся!", cert: "Акционер макаронной фабрики (0.0001%)", bg: "#fff0f5" },
+    { title: "Вступи в армию!", cert: "Военный билет (500 мест занято)", bg: "#f0e68c" },
+    { title: "Работа за проезд", cert: "Удостоверение сборщика пошлин", bg: "#ffe4e1" },
+    { title: "Стань олигархом!", cert: "Заявка в совет (автоотказ)", bg: "#dcdcdc" },
+    { title: "Найди фисташки!", cert: "Сертификат искателя фисташек", bg: "#f5fffa" },
+    { title: "Сдай маму в аренду", cert: "Договор аренды мамы (шутка)", bg: "#fff8dc" }
+];
+
+function initBoard() {
+    let grid = document.getElementById('board-grid');
+    grid.innerHTML = '';
+    boardItems.forEach((item, idx) => {
+        let div = document.createElement('div');
+        div.className = 'retro-box';
+        div.style.cssText = `width:160px; background:${item.bg}; cursor:pointer; transform:rotate(${(idx%2===0?1:-1)}deg); text-align:center;`;
+        div.innerHTML = `<b style="font-size:13px;">${item.title}</b><br><small style="font-size:10px;">[Получить документ]</small>`;
+        div.onclick = () => generateCertificate(item, idx);
+        grid.appendChild(div);
+    });
+}
+
+function generateCertificate(item, idx) {
+    // // УДОСТОВЕРЕНИЕ: Создание на Canvas
+    if (!state.certs.includes(idx)) {
+        state.certs.push(idx);
+        localStorage.setItem('sn_certs', JSON.stringify(state.certs));
+    }
+
+    let modalHtml = `
+        <h2 style="text-align:center;">ОФИЦИАЛЬНЫЙ ДОКУМЕНТ СПСП</h2>
+        <canvas id="cert-canvas" width="550" height="260" style="border:2px solid #000; width:100%;"></canvas>
+        <br><br>
+        <button class="btn" onclick="downloadCanvas('cert-canvas', 'doc_spsp.png')">Скачать PNG</button>
+    `;
+    openModal(modalHtml);
+
+    setTimeout(() => {
+        let canvas = document.getElementById('cert-canvas');
+        if(!canvas) return;
+        let ctx = canvas.getContext('2d');
+        
+        ctx.fillStyle = '#fff8dc';
+        ctx.fillRect(0, 0, 550, 260);
+        ctx.strokeStyle = '#000';
+        ctx.lineWidth = 4;
+        ctx.strokeRect(6, 6, 538, 248);
+
+        ctx.fillStyle = '#000';
+        ctx.font = 'bold 16px Times New Roman';
+        ctx.fillText("СОЮЗ ПОСЕЛЕНИЙ СТАРОНОРИЛЬСКОГО ПУТИ", 50, 35);
+        ctx.font = 'bold 14px Courier New';
+        ctx.fillText(item.cert.toUpperCase(), 50, 65);
+
+        ctx.font = '13px Times New Roman';
+        ctx.fillText(`Выдано гражданину: ${state.nick}`, 50, 105);
+        ctx.fillText(`Дата выдачи: ${new Date().toLocaleDateString()}`, 50, 130);
+        ctx.fillText(`Регистрационный номер: №${Math.floor(Math.random()*89999+10000)}`, 50, 155);
+
+        // Печать
+        ctx.strokeStyle = '#c00';
+        ctx.lineWidth = 3;
+        ctx.beginPath(); ctx.arc(440, 150, 45, 0, Math.PI*2); ctx.stroke();
+        ctx.fillStyle = '#c00';
+        ctx.font = 'bold 11px Times New Roman';
+        ctx.fillText("ДЕЙСТВИТЕЛЬНО", 400, 145);
+        ctx.fillText("СПСП СОВЕТ", 410, 160);
+
+        // Пасхалка проверки всех 12
+        if (state.certs.length >= 12) {
+            setTimeout(() => {
+                alert(`Поздравляем, ${state.nick}! Вы собрали все 12 удостоверений. Олигархический совет гордится вами. Пива не будет.`);
+            }, 500);
+        }
+    }, 100);
+}
+
+function downloadCanvas(canvasId, filename) {
+    let canvas = document.getElementById(canvasId);
+    let link = document.createElement('a');
+    link.download = filename;
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+}
+
+// ==========================================
+// ЛИЧНЫЕ СООБЩЕНИЯ (ЧАТЫ)
+// ==========================================
+// // ЧАТ: Логика чатов
+let currentChat = 1;
+let chatData = {
+    1: [
+        { sender: 'Мама', text: 'Гражданин, это мафия. Твоя мама у нас. Принеси ящик пива, и она вернется.' }
+    ],
+    2: [
+        { sender: 'Журналист', text: 'Здравствуйте. Я журналист из Арвоники, велардиец. Вы случайно не педофил?' }
+    ],
+    3: [
+        { sender: 'Интерпол', text: 'Здравствуйте. Интерпол. Мы ищем вашего босса. Он у вас?' }
+    ]
+};
+
+function openChat(id) {
+    currentChat = id;
+    renderChat();
+}
+
+function addChatLog(msg) {
+    let log = document.getElementById('chat-log');
+    if(log) {
+        log.innerHTML += `<div>[${new Date().toLocaleTimeString()}] ${msg}</div>`;
+        log.scrollTop = log.scrollHeight;
+    }
+}
+
+function renderChat() {
+    let win = document.getElementById('chat-window');
+    let opts = document.getElementById('chat-options');
+    win.innerHTML = '';
+    opts.innerHTML = '';
+
+    chatData[currentChat].forEach(m => {
+        let div = document.createElement('div');
+        div.className = 'chat-bubble ' + (m.sender === 'Я' ? 'me' : '');
+        div.innerHTML = `<b>${m.sender}:</b> ${m.text}`;
+        win.appendChild(div);
+    });
+    win.scrollTop = win.scrollHeight;
+
+    // Ветвления
+    if (currentChat === 1) {
+        opts.innerHTML = `
+            <button class="btn" onclick="replyChat(1, 'Ок, будет пиво', 'Приятно иметь дело. Мама освобождена!')">Ок, будет пиво</button>
+            <button class="btn" onclick="replyChat(1, 'А может два ящика?', 'Жадность. Позвоним позже.')">А может два?</button>
+            <button class="btn" onclick="replyChat(1, 'У меня нет пива, у меня инфляция', 'Печатай деньги!'); location.hash='#/printer';">У меня инфляция</button>
+        `;
+    } else if (currentChat === 2) {
+        opts.innerHTML = `
+            <button class="btn" onclick="replyChat(2, 'Конечно нет!', 'Понятно. А воруете ли вы макароны?')">Конечно нет!</button>
+            <button class="btn" onclick="replyChat(2, 'Заблокировать', 'Я вернусь с другим паспортом!')">Заблокировать</button>
+        `;
+    } else if (currentChat === 3) {
+        opts.innerHTML = `
+            <button class="btn" onclick="replyChat(3, 'Не знаю такого', 'Проверяем... Мы пришлем агента.')">Не знаю такого</button>
+            <button class="btn" onclick="replyChat(3, 'Он в макаронной фабрике', 'Агент выехал на фабрику!')">Он на фабрике</button>
+        `;
+    }
+}
+
+function replyChat(chatId, myMsg, replyMsg) {
+    chatData[chatId].push({ sender: 'Я', text: myMsg });
+    chatData[chatId].push({ sender: 'Собеседник', text: replyMsg });
+    
+    state.suspicion = Math.min(100, state.suspicion + 15);
+    document.getElementById('suspicion-level').innerText = state.suspicion;
+    localStorage.setItem('sn_suspicion', state.suspicion);
+    
+    addChatLog(`Чат ${chatId}: Вы ответили "${myMsg}". Подозрение: ${state.suspicion}%`);
+    playBeep(600, 'sine', 0.05);
+    renderChat();
+}
+
+// ==========================================
+// СОВЕТ, АРМИЯ, МАКАРОНЫ
+// ==========================================
+function applyToSoviet() {
+    playBeep(150, 'sawtooth', 0.2);
+    openModal(`
+        <h2>ОТКАЗ В РЕГИСТРАЦИИ</h2>
+        <p>Спасибо, <b>${state.nick}</b>. Ваша заявка рассмотрена Олигархическим советом.</p>
+        <p style="color:red; font-weight:bold;">ОТКАЗ. Причина: Нет мест. Или есть, но не для вас. Попробуйте в следующей жизни.</p>
+    `);
+}
+
+function initVoting() {
+    let list = document.getElementById('voting-list');
+    let questions = [
+        "Строить макаронную фабрику?",
+        "Отменить пошлины на оружие?",
+        "Вступить в МОС?",
+        "Принять специалистов из Дрейландии?"
+    ];
+    list.innerHTML = '';
+    questions.forEach((q, i) => {
+        list.innerHTML += `
+            <div style="margin-bottom:6px;">
+                <b>${q}</b><br>
+                <button class="btn" onclick="vote(${i})">ДА</button>
+                <button class="btn" onclick="vote(${i})">НЕТ</button>
+                <button class="btn" onclick="vote(${i})">ВОЗДЕРЖАТЬСЯ</button>
+            </div>
+        `;
+    });
+}
+
+function vote(idx) {
+    playBeep(500, 'sine', 0.05);
+    alert("Олигархический совет принял решение. Оно никого не обязывает.");
+}
+
+function calculateTax() {
+    let cargo = document.getElementById('calc-cargo').value;
+    let res = [
+        "Пошлина: 3 ящика пива.",
+        "Пошлина: 1 мешок картошки и устное спасибо.",
+        "Пошлина: не платишь — не проезжаешь.",
+        "Пошлина: 570 000 €М. Шутка. 2 ящика пива.",
+        "Пошлина: ты уже заплатил. Проверь карманы."
+    ];
+    let rand = res[Math.floor(Math.random()*res.length)];
+    document.getElementById('tax-result').innerText = rand;
+}
+
+function hireSoldier() {
+    let countEl = document.getElementById('army-count');
+    if (state.inflation > 100) {
+        countEl.innerText = parseInt(countEl.innerText) + 1;
+        alert("Бюджет 0 €М. Но так как инфляция высока — мы напечатали еще. Боец нанят!");
+    } else {
+        alert("Бюджет: 0 €М. Отказано в найме.");
+    }
+}
+
+function investPasta() {
+    alert("Денег нет, но вы держитесь!");
+}
+
+function becomePastaHero() {
+    document.getElementById('pasta-hero-name').innerText = state.nick;
+    alert(`Герой Союза: ${state.nick}. Ваша доля 1% прибыли составляет 0 €М. Поздравляем!`);
+}
+
+// ==========================================
+// КАРТА ДЕРЕВЕНЬ
+// ==========================================
+function showVillage(name, pop, law) {
+    let box = document.getElementById('village-info');
+    box.style.display = 'block';
+    document.getElementById('v-name').innerText = name;
+    document.getElementById('v-pop').innerText = pop;
+    document.getElementById('v-law').innerText = law;
+    playBeep(700, 'sine', 0.05);
+}
+
+// ==========================================
+// МИНИ-ИГРЫ
+// ==========================================
+function switchGame(gameId) {
+    document.querySelectorAll('.game-box').forEach(el => el.style.display = 'none');
+    document.getElementById(gameId).style.display = 'block';
+}
+
+// Игра 1: Мафия (Canvas Dodge)
+let mafiaTimer = null;
+function startMafiaGame() {
+    let canvas = document.getElementById('mafia-canvas');
+    let ctx = canvas.getContext('2d');
+    let px = 200, py = 170;
+    let enemies = [];
+    let score = 0;
+    
+    canvas.onmousemove = (e) => {
+        let rect = canvas.getBoundingClientRect();
+        px = e.clientX - rect.left;
+    };
+
+    if (mafiaTimer) clearInterval(mafiaTimer);
+
+    mafiaTimer = setInterval(() => {
+        score++;
+        if (Math.random() < 0.2) enemies.push({ x: Math.random() * 380, y: 0 });
+
+        ctx.fillStyle = '#000';
+        ctx.fillRect(0, 0, 400, 200);
+
+        // Игрок
+        ctx.fillStyle = '#0f0';
+        ctx.fillRect(px - 10, py, 20, 20);
+
+        // Враги
+        ctx.fillStyle = '#f00';
+        for (let i = 0; i < enemies.length; i++) {
+            enemies[i].y += 3;
+            ctx.fillRect(enemies[i].x, enemies[i].y, 15, 15);
+
+            // Столкновение
+            if (Math.abs(enemies[i].x - px) < 15 && Math.abs(enemies[i].y - py) < 15) {
+                clearInterval(mafiaTimer);
+                playBeep(150, 'sawtooth', 0.3);
+                alert(`Мафия поймала вас! Счёт: ${score} сек.`);
+                return;
+            }
+        }
+
+        ctx.fillStyle = '#fff';
+        ctx.font = '12px Courier New';
+        ctx.fillText(`Время: ${score}`, 10, 20);
+    }, 50);
+}
+
+// Игра 2: Фисташки
+let pistachioLoc = -1;
+let pistachioTries = 0;
+function initPistachioGame() {
+    let grid = document.getElementById('pistachio-grid');
+    grid.innerHTML = '';
+    pistachioLoc = Math.floor(Math.random() * 25);
+    pistachioTries = 10;
+
+    for (let i = 0; i < 25; i++) {
+        let btn = document.createElement('button');
+        btn.className = 'btn';
+        btn.style.cssText = 'width:40px; height:40px; padding:0;';
+        btn.innerText = '?';
+        btn.onclick = () => checkPistachio(i, btn);
+        grid.appendChild(btn);
+    }
+}
+
+function checkPistachio(idx, btn) {
+    if (pistachioTries <= 0) return;
+    pistachioTries--;
+    if (idx === pistachioLoc) {
+        btn.innerText = '🥜';
+        btn.style.background = '#90ee90';
+        playCoinSound();
+        alert("ПОБЕДА! Вы нашли фисташку! Сертификат искателя доступен на Доске объявлений.");
+    } else {
+        btn.innerText = 'X';
+        btn.disabled = true;
+        playBeep(200, 'sine', 0.05);
+        if (pistachioTries === 0) alert("Фисташки не найдены! Попробуйте снова.");
+    }
+}
+
+// Игра 3: d20
+function rollDice() {
+    let val = Math.floor(Math.random() * 20) + 1;
+    document.getElementById('dice-result').innerText = val;
+    playBeep(800, 'sine', 0.1);
+    alert(`Вы должны Антошке ${val} ящиков пива!`);
+}
+
+// ==========================================
+// ГОСТЕВАЯ КНИГА
+// ==========================================
+let guestPosts = JSON.parse(localStorage.getItem('sn_guest') || '[]');
+
+function renderGuest() {
+    let container = document.getElementById('guest-posts-container');
+    container.innerHTML = '';
+    
+    // Предзаполненные по умолчанию
+    let defaultPosts = [
+        { author: 'Антошка', date: '12.10.1980', text: 'Я верну. Скоро.' },
+        { author: 'Мама', date: '13.10.1980', text: 'Сынок, я в порядке. Пиво было вкусное.' },
+        { author: 'Интерпол', date: '14.10.1980', text: 'Мы всё ещё ищем босса.' }
+    ];
+
+    [...guestPosts, ...defaultPosts].forEach(p => {
+        let div = document.createElement('div');
+        div.className = 'retro-box';
+        div.style.background = '#fff';
+        div.innerHTML = `<b>${p.author}</b> <small>(${p.date})</small>:<br>${p.text}`;
+        container.appendChild(div);
+    });
+}
+
+function addGuestPost() {
+    let txt = document.getElementById('guest-msg-input').value.trim();
+    if(!txt) return;
+    
+    let newPost = { author: state.nick, date: new Date().toLocaleDateString(), text: txt };
+    guestPosts.unshift(newPost);
+    localStorage.setItem('sn_guest', JSON.stringify(guestPosts));
+    document.getElementById('guest-msg-input').value = '';
+    renderGuest();
+    playBeep(500, 'sine', 0.05);
+
+    // Автоответ через 30 секунд
+    setTimeout(() => {
+        guestPosts.unshift({
+            author: 'Олигархический совет',
+            date: new Date().toLocaleDateString(),
+            text: `Автоответ для ${state.nick}: Сообщение принято. Пиво: не доставлено.`
+        });
+        localStorage.setItem('sn_guest', JSON.stringify(guestPosts));
+        renderGuest();
+    }, 30000);
+}
+
+// ==========================================
+// СЕКРЕТНЫЙ РАЗДЕЛ & ПАСХАЛКИ
+// ==========================================
+function checkReality() {
+    alert("Реальность не найдена. Попробуйте позже.");
+}
+
+function reportInterpol() {
+    alert("Интерпол уже в пути. Он тоже заблудился.");
+}
+
+// ПАСХАЛКА: Консольная команда
+Object.defineProperty(window, 'sn_pivo', {
+    get: function() {
+        alert(`${state.nick}, ты нашёл фисташки. Молодец.`);
+        return "Пиво обнаружено!";
+    }
+});
+
+// ==========================================
+// СТАРТ ПРИ ЗАГРУЗКЕ
+// ==========================================
+window.onload = () => {
+    checkNick();
+    handleRoute();
+    updatePrinterUI();
+    initBoard();
+    initVoting();
+    initPistachioGame();
+    renderGuest();
+    updateVisitCounter();
+};
+</script>
+</body>
+</html>
